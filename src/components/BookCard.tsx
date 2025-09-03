@@ -21,7 +21,7 @@ function BookCard({data} : { data: dataProps }) {
   return (
     <div 
     className='bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105'
-    // style={{viewTransitionName: `bookcard-bg-${data.id}`}}
+    style={{viewTransitionName: `bookcard-bg-${data.id}`}}
     >
         <div className='flex flex-row'>
             <Image
@@ -29,7 +29,8 @@ function BookCard({data} : { data: dataProps }) {
               src={data.img} 
               alt={data.title} 
               className='w-32 h-48 object-cover mr-4 rounded-lg'
-              style={{ viewTransitionName: `book-image-${data.id}` }} />
+              // style={{ viewTransitionName: `book-image-${data.id}` }} 
+              />
             <div className='flex flex-col justify-between'>
               <div>
                 <h1 className='font-semibold text-lg text-gray-800 hover:text-indigo-600 transition-colors'>{data.title}</h1>

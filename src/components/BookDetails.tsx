@@ -20,7 +20,7 @@ function BookDetails({ data } : { data: dataProps }) {
     <div className="w-3/4 mx-auto">
       <div 
       className="bg-white shadow-lg rounded-lg overflow-hidden"
-      // style={{viewTransitionName: `bookcard-bg-${data.id}`}}
+      style={{viewTransitionName: `bookcard-bg-${data.id}`}}
       >
         <div className="md:flex">
           <div className="md:flex-shrink-0 p-6">
@@ -31,7 +31,7 @@ function BookDetails({ data } : { data: dataProps }) {
                 width={300}
                 height={500}
                 className=" object-cover rounded-lg shadow-md"
-                style={{ viewTransitionName: `book-image-${data.id}` }}
+                // style={{ viewTransitionName: `book-image-${data.id}` }}
               />
           </div>
           <div className="p-6">
