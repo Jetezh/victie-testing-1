@@ -6,15 +6,11 @@ import LoadingBar from 'react-top-loading-bar'
 
 export default function TopLoader() {
   const [progress, setProgress] = useState(0)
-  const [showOverlay, setShowOverlay] = useState(false)
   const pathname = usePathname()
   const progressInterval = useRef<NodeJS.Timeout | null>(null)
-  const overlayTimeout = useRef<NodeJS.Timeout | null>(null)
   const imageListenersCleanup = useRef<(() => void) | null>(null)
 
   useEffect(() => {
-    // Show overlay immediately to hide content loading
-    setShowOverlay(true)
     setProgress(10)
 
     // Clear any previous listeners
@@ -23,17 +19,15 @@ export default function TopLoader() {
       imageListenersCleanup.current = null
     }
 
-    // After a tick, measure images inside main and track their loading
+    // Track images loading in main content
     const startTracking = () => {
       const main = document.querySelector('main')
       const images = Array.from(main?.querySelectorAll('img') || []) as HTMLImageElement[]
-
       const pending = images.filter(img => !img.complete)
 
       // If no pending images, finish quickly
       if (pending.length === 0) {
         setProgress(100)
-        overlayTimeout.current = setTimeout(() => setShowOverlay(false), 150)
         return
       }
 
@@ -42,18 +36,17 @@ export default function TopLoader() {
 
       const onProgress = () => {
         loadedCount += 1
-        // Advance up to 90% based on proportion of loaded images
+        // Advance progress based on proportion of loaded images
         const proportion = loadedCount / total
         const next = 10 + Math.min(80, Math.floor(proportion * 80))
         setProgress(next)
+        
         if (loadedCount >= total) {
-          // All images done, complete to 100 and hide overlay
           setProgress(100)
-          overlayTimeout.current = setTimeout(() => setShowOverlay(false), 150)
         }
       }
 
-      // Attach listeners
+      // Attach event listeners to pending images
       const cleanups: Array<() => void> = []
       pending.forEach(img => {
         const handleLoad = () => onProgress()
@@ -69,7 +62,6 @@ export default function TopLoader() {
       // Safety timeout in case some resources never resolve
       const safety = window.setTimeout(() => {
         setProgress(100)
-        overlayTimeout.current = setTimeout(() => setShowOverlay(false), 150)
         cleanups.forEach(fn => fn())
       }, 5000)
 
@@ -87,9 +79,6 @@ export default function TopLoader() {
       if (progressInterval.current) {
         clearTimeout(progressInterval.current)
       }
-      if (overlayTimeout.current) {
-        clearTimeout(overlayTimeout.current)
-      }
       if (imageListenersCleanup.current) {
         imageListenersCleanup.current()
         imageListenersCleanup.current = null
@@ -98,27 +87,15 @@ export default function TopLoader() {
   }, [pathname])
 
   return (
-    <>
-      <LoadingBar 
-        color="#DD7B8D"
-        progress={progress}
-        waitingTime={400}
-        onLoaderFinished={() => {
-          setProgress(0)
-        }}
-      />
-      
-      {/* Overlay to hide content loading */}
-      {showOverlay && (
-        <div 
-          className="fixed inset-0 bg-white z-50 transition-opacity duration-300"
-          style={{
-            opacity: showOverlay ? 1 : 0,
-            pointerEvents: showOverlay ? 'auto' : 'none'
-          }}
-        />
-      )}
-    </>
+    <LoadingBar 
+      color="#DD7B8D"
+      progress={progress}
+      waitingTime={400}
+      height={5}
+      onLoaderFinished={() => {
+        setProgress(0)
+      }}
+    />
   )
 }
 
