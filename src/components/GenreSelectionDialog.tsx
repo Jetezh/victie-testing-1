@@ -107,7 +107,7 @@ export default function GenreSelectionDialog() {
             type="button"
             disabled={selectedGenres.length === 0}
             onClick={handleContinue}
-            className={`w-full lg:py-5 md:py-5 sm:py-4 py-3 text-lg rounded-lg text-white transition-all duration-300
+            className={`w-full lg:py-5 md:py-5 sm:py-4 py-3 lg:text-lg md:text-lg sm:text-base text-sm rounded-lg text-white transition-all duration-300
               ${
                 selectedGenres.length > 0
                   ? 'bg-[var(--accent-color)] opacity-100 cursor-pointer'
