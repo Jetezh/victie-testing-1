@@ -45,7 +45,7 @@ export default function GenreSelectionDialog() {
         transition={{ duration: 0.3, ease: 'easeOut' }}
       >
         {/* Tambahkan padding & support dark mode */}
-        <div className="p-7 mx-4 w-full max-w-2xl rounded-lg shadow-lg text-center flex flex-col lg:gap-5 md:gap-5 sm:gap-4 gap-4 
+        <div className="p-7 mx-4 max-w-2xl max-h-[100vh] rounded-lg shadow-lg text-center flex flex-col lg:gap-5 md:gap-5 sm:gap-4 gap-4 
           bg-white dark:bg-neutral-900 dark:text-gray-100 transition-colors duration-300">
           
           {/* Header */}
@@ -59,8 +59,11 @@ export default function GenreSelectionDialog() {
             </p>
           </div>
 
-          {/* Grid Genre (Responsive + Darkmode) */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+          {/* Grid Genre */}
+          <div
+            className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 
+            max-h-[360px] overflow-y-auto pr-2 custom-scrollbar"
+          >
             {genreData.map((item) => {
               const Icon = item.icon;
               const isSelected = selectedGenres.includes(item.genre);
