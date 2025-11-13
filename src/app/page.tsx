@@ -8,7 +8,8 @@ import { books } from "@/data/books";
 import { Link } from "next-view-transitions";
 import { useEffect, useState } from "react";
 import { ProductItem } from "@/types";
-import { FromScratch } from "@/app/scroll/FromScracth";
+// import { FromScratch } from "@/app/scroll/FromScracth";
+import { WithReactScroll } from "@/app/scroll/WithReactScroll";
 
 export default function Page() {
 
@@ -65,11 +66,10 @@ export default function Page() {
               </Link>
             ))}
           </div>
-          <FromScratch
+          <WithReactScroll
             products={products}
             fetchData={fetchData}
-            loading={loading}
-            error={error}
+            totalProducts={totalProducts}
           />
         </main>
       </PageTransition>
