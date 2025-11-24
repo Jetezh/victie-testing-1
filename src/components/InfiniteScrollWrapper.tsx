@@ -67,7 +67,7 @@ export function InfiniteScrollWrapper<T>({
       container.removeEventListener('scroll', updateScrollButtons);
       resizeObserver.disconnect();
     };
-  }, [direction, items]);
+  }, [direction, items, containerRef]);
 
   const scrollLeft = () => {
     const container = containerRef.current;
